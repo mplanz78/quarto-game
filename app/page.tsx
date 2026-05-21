@@ -30,11 +30,11 @@ function renderPiece(piece: any, size = "normal") {
   const dimensions =
     piece.height === "tall"
       ? size === "small"
-        ? "w-10 h-16"
-        : "w-14 h-24"
+        ? "w-7 h-12 sm:w-10 sm:h-16"
+        : "w-10 h-16 sm:w-14 sm:h-24"
       : size === "small"
-      ? "w-10 h-10"
-      : "w-14 h-14";
+      ? "w-7 h-7 sm:w-10 sm:h-10"
+      : "w-10 h-10 sm:w-14 sm:h-14";
 
   const woodTexture =
     piece.color === "dark"
@@ -59,7 +59,6 @@ function renderPiece(piece: any, size = "normal") {
         relative
         ${dimensions}
         ${woodTexture}
-
         border-2
         shadow-[0_8px_20px_rgba(0,0,0,0.5)]
         transition-all
@@ -68,7 +67,7 @@ function renderPiece(piece: any, size = "normal") {
         ${
           piece.shape === "circle"
             ? "rounded-full"
-            : "rounded-xl"
+            : "rounded-lg"
         }
 
         ${
@@ -78,7 +77,6 @@ function renderPiece(piece: any, size = "normal") {
         }
       `}
     >
-      {/* brilho */}
       <div
         className="
           absolute
@@ -92,16 +90,17 @@ function renderPiece(piece: any, size = "normal") {
         "
       />
 
-      {/* furo */}
       {!piece.filled && (
         <div
           className="
             absolute
-            top-2
+            top-1
             left-1/2
             -translate-x-1/2
-            w-3
-            h-3
+            w-2
+            h-2
+            sm:w-3
+            sm:h-3
             bg-black/50
             rounded-full
             shadow-inner
@@ -171,7 +170,6 @@ export default function Home() {
   const [showRules, setShowRules] =
     useState(false);
 
-  // IA escolhe peça
   useEffect(() => {
     if (!gameStarted) return;
 
@@ -197,7 +195,6 @@ export default function Home() {
     setPhase("PLAYER_PLACES");
   }, [phase, gameStarted]);
 
-  // IA joga
   useEffect(() => {
     if (!gameStarted) return;
 
@@ -233,7 +230,7 @@ export default function Home() {
       setAiPiece(null);
 
       setPhase("AI_GIVES_PLAYER");
-    }, 1000);
+    }, 900);
 
     return () => clearTimeout(timer);
   }, [phase, aiPiece, board, gameStarted]);
@@ -273,22 +270,23 @@ export default function Home() {
 
   return (
     <>
-      {/* TELA INICIAL */}
       {!gameStarted && (
         <div className="
           fixed inset-0
           bg-[#c9a06b]
           flex items-center justify-center
           z-50
+          p-6
         ">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center text-center">
 
             <h1 className="
-              text-8xl
+              text-5xl
+              sm:text-8xl
               text-[#4a2815]
-              tracking-[12px]
-              mb-10
-              drop-shadow-2xl
+              tracking-[8px]
+              sm:tracking-[12px]
+              mb-8
               font-serif
             ">
               QUARTO
@@ -299,10 +297,11 @@ export default function Home() {
                 setGameStarted(true)
               }
               className="
-                px-12
-                py-5
+                px-8
+                py-4
                 rounded-2xl
-                text-2xl
+                text-lg
+                sm:text-2xl
                 bg-gradient-to-b
                 from-[#8a5a2f]
                 to-[#4a2815]
@@ -321,7 +320,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* JOGO */}
       <main className="
         min-h-screen
         bg-[#c9a06b]
@@ -329,20 +327,19 @@ export default function Home() {
         flex
         flex-col
         items-center
-        justify-center
-        px-6
+        px-2
+        sm:px-6
         py-4
         relative
       ">
 
-        {/* BOTÃO REGRAS */}
         <button
           onClick={() => setShowRules(true)}
           className="
             absolute
-            top-4
-            right-4
-            px-5
+            top-3
+            right-3
+            px-4
             py-2
             rounded-xl
             bg-[#4a2815]
@@ -350,36 +347,38 @@ export default function Home() {
             border
             border-[#7b5232]
             shadow-xl
-            hover:scale-105
-            transition-all
+            text-sm
+            sm:text-base
           "
         >
           Regras
         </button>
 
-        {/* TÍTULO */}
         <h1 className="
-          text-7xl
+          text-4xl
+          sm:text-7xl
           font-serif
-          tracking-[10px]
-          mb-6
+          tracking-[6px]
+          sm:tracking-[10px]
+          mb-4
+          sm:mb-6
           text-[#4a2815]
-          drop-shadow-2xl
         ">
           QUARTO
         </h1>
 
-        {/* STATUS */}
         <div className="
-          mb-6
-          px-10
+          mb-4
+          px-5
           py-3
           rounded-2xl
           border
           border-[#7b5232]
           bg-[#e0c39a]
           shadow-xl
-          text-xl
+          text-sm
+          sm:text-xl
+          text-center
         ">
           {phase === "PLAYER_PLACES" &&
             "Posicione sua peça"}
@@ -391,28 +390,37 @@ export default function Home() {
             "IA pensando..."}
         </div>
 
-        {/* ÁREA PRINCIPAL */}
         <div className="
           flex
-          gap-10
-          items-start
-          mb-8
+          flex-col
+          lg:flex-row
+          gap-5
+          items-center
+          mb-6
+          w-full
+          max-w-7xl
         ">
 
           {/* IA */}
-          <div className="flex flex-col items-center">
+          <div className="
+            flex
+            flex-col
+            items-center
+          ">
             <div className="
-              mb-3
-              text-xl
-              text-[#4a2815]
+              mb-2
+              text-lg
+              sm:text-xl
               font-serif
             ">
               Peça da IA
             </div>
 
             <div className="
-              w-32
-              h-32
+              w-24
+              h-24
+              sm:w-32
+              sm:h-32
               rounded-3xl
               bg-[#e0c39a]
               border
@@ -428,7 +436,8 @@ export default function Home() {
 
           {/* TABULEIRO */}
           <div className="
-            p-6
+            p-3
+            sm:p-6
             rounded-[30px]
             bg-gradient-to-b
             from-[#c89b6d]
@@ -440,7 +449,8 @@ export default function Home() {
             <div className="
               grid
               grid-cols-4
-              gap-4
+              gap-2
+              sm:gap-4
             ">
               {board.map((piece, index) => (
                 <div
@@ -449,8 +459,10 @@ export default function Home() {
                     placePlayerPiece(index)
                   }
                   className="
-                    w-24
-                    h-24
+                    w-16
+                    h-16
+                    sm:w-24
+                    sm:h-24
                     rounded-full
                     bg-[#6e4a2f]
                     border-4
@@ -471,19 +483,25 @@ export default function Home() {
           </div>
 
           {/* JOGADOR */}
-          <div className="flex flex-col items-center">
+          <div className="
+            flex
+            flex-col
+            items-center
+          ">
             <div className="
-              mb-3
-              text-xl
-              text-[#4a2815]
+              mb-2
+              text-lg
+              sm:text-xl
               font-serif
             ">
               Sua peça
             </div>
 
             <div className="
-              w-32
-              h-32
+              w-24
+              h-24
+              sm:w-32
+              sm:h-32
               rounded-3xl
               bg-[#e0c39a]
               border-2
@@ -497,11 +515,12 @@ export default function Home() {
               {renderPiece(playerPiece)}
             </div>
           </div>
+
         </div>
 
         {/* ESTOQUE */}
         <div className="
-          p-5
+          p-4
           rounded-[30px]
           bg-gradient-to-b
           from-[#e0c39a]
@@ -509,21 +528,24 @@ export default function Home() {
           border
           border-[#7b5232]
           shadow-2xl
+          w-full
+          max-w-6xl
         ">
 
           <div className="
             text-center
             mb-4
-            text-xl
+            text-base
+            sm:text-xl
             font-serif
-            text-[#4a2815]
           ">
-            ESTOQUE - ESCOLHA UMA PEÇA PARA A IA
+            ESTOQUE
           </div>
 
           <div className="
             flex
-            gap-3
+            gap-2
+            sm:gap-3
             flex-wrap
             justify-center
           ">
@@ -534,8 +556,10 @@ export default function Home() {
                   givePieceToAI(piece)
                 }
                 className={`
-                  w-20
-                  h-20
+                  w-14
+                  h-14
+                  sm:w-20
+                  sm:h-20
                   rounded-2xl
                   flex
                   items-center
@@ -569,21 +593,24 @@ export default function Home() {
 
       </main>
 
-      {/* MODAL REGRAS */}
+      {/* REGRAS */}
       {showRules && (
         <div className="
           fixed inset-0
           bg-black/60
           flex items-center justify-center
           z-50
+          p-4
         ">
 
           <div className="
+            w-full
             max-w-2xl
             bg-[#f2d7a6]
             text-[#4a2815]
-            p-10
-            rounded-[40px]
+            p-6
+            sm:p-10
+            rounded-[30px]
             border-4
             border-[#7b5232]
             shadow-2xl
@@ -596,8 +623,8 @@ export default function Home() {
               }
               className="
                 absolute
-                top-4
-                right-4
+                top-3
+                right-3
                 w-10
                 h-10
                 rounded-full
@@ -610,55 +637,49 @@ export default function Home() {
             </button>
 
             <h2 className="
-              text-5xl
+              text-3xl
+              sm:text-5xl
               font-serif
-              mb-8
+              mb-6
               text-center
             ">
               Como Jogar
             </h2>
 
             <div className="
-              text-lg
-              leading-9
-              space-y-5
+              text-sm
+              sm:text-lg
+              leading-7
+              sm:leading-9
+              space-y-4
             ">
-
               <p>
-                • O objetivo é formar uma linha
-                com 4 peças que compartilhem
-                pelo menos UMA característica.
+                • Forme uma linha com 4 peças
+                que compartilhem uma característica.
               </p>
 
               <p>
                 • As peças podem ser:
-                claras ou escuras,
-                altas ou baixas,
-                redondas ou quadradas,
-                maciças ou vazadas.
+                claras/escuras,
+                altas/baixas,
+                redondas/quadradas,
+                maciças/vazadas.
               </p>
 
               <p>
-                • Você NÃO escolhe a peça que vai jogar.
-                Seu adversário escolhe para você.
+                • O adversário escolhe a peça
+                que você deve jogar.
               </p>
 
               <p>
-                • Primeiro, posicione a peça recebida
-                no tabuleiro.
+                • Após posicionar sua peça,
+                escolha uma para a IA.
               </p>
 
               <p>
-                • Depois, escolha uma peça do estoque
-                para a IA posicionar.
+                • Vence quem formar uma linha
+                horizontal, vertical ou diagonal.
               </p>
-
-              <p>
-                • Vence quem completar uma linha
-                horizontal, vertical ou diagonal
-                com uma característica em comum.
-              </p>
-
             </div>
 
           </div>
@@ -672,13 +693,15 @@ export default function Home() {
           bg-black/70
           flex items-center justify-center
           z-50
+          p-4
         ">
           <div className="
             bg-[#e0c39a]
             border
             border-[#7b5232]
             rounded-[40px]
-            p-12
+            p-8
+            sm:p-12
             shadow-2xl
             flex
             flex-col
@@ -686,10 +709,12 @@ export default function Home() {
           ">
 
             <h2 className="
-              text-6xl
+              text-4xl
+              sm:text-6xl
               mb-8
               text-[#4a2815]
               font-serif
+              text-center
             ">
               {winner} venceu!
             </h2>
@@ -699,10 +724,11 @@ export default function Home() {
                 window.location.reload()
               }
               className="
-                px-10
+                px-8
                 py-4
                 rounded-2xl
-                text-2xl
+                text-lg
+                sm:text-2xl
                 bg-gradient-to-b
                 from-[#8a5a2f]
                 to-[#4a2815]
