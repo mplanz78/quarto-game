@@ -465,10 +465,10 @@ export default function Home() {
   sm:h-24
   rounded-full
   bg-gradient-to-br
-  from-[#8f8573]
-  to-[#6f6555]
+  from-[#ece7df]
+  to-[#cfc8bc]
   border-4
-  border-[#5c5244]
+  border-[#8b7355]
   shadow-inner
   flex
   items-center
