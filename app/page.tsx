@@ -459,21 +459,23 @@ export default function Home() {
                     placePlayerPiece(index)
                   }
                   className="
-                    w-16
-                    h-16
-                    sm:w-24
-                    sm:h-24
-                    rounded-full
-                    bg-[#6e4a2f]
-                    border-4
-                    border-[#7b5232]
-                    shadow-inner
-                    flex
-                    items-center
-                    justify-center
-                    cursor-pointer
-                    hover:scale-105
-                    transition-all
+  w-16
+  h-16
+  sm:w-24
+  sm:h-24
+  rounded-full
+  bg-gradient-to-br
+  from-[#d8b98a]
+  to-[#b98a5f]
+  border-4
+  border-[#8a5a2f]
+  shadow-inner
+  flex
+  items-center
+  justify-center
+  cursor-pointer
+  hover:scale-105
+  transition-all
                   "
                 >
                   {renderPiece(piece)}
