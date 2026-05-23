@@ -465,10 +465,10 @@ export default function Home() {
   sm:h-24
   rounded-full
   bg-gradient-to-br
-  from-[#d8b98a]
-  to-[#b98a5f]
+  from-[#8f8573]
+  to-[#6f6555]
   border-4
-  border-[#8a5a2f]
+  border-[#5c5244]
   shadow-inner
   flex
   items-center
@@ -476,7 +476,7 @@ export default function Home() {
   cursor-pointer
   hover:scale-105
   transition-all
-                  "
+"
                 >
                   {renderPiece(piece)}
                 </div>
